@@ -1,0 +1,2 @@
+1. Add transactions
+2. Open and close connection  for each request
