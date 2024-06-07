@@ -9,11 +9,12 @@ import { generateHashedPassword } from "../services/generateHashedPassword";
 
 dotenv.config();
 const jwtPassword = process.env.jwtPassword as string;
+
 const signUp = async (req:Request, res:Response) => {
     try {
         // 1. Validate Input
-        const validationResponse = validationSchema.signUpSchema.safeParse(req.body);
-        if(!validationResponse.success){
+        const { success } = validationSchema.signUpSchema.safeParse(req.body);
+        if(!success){
             return res.status(400).json({"msg": "Input validation failed!"})
         }
 
