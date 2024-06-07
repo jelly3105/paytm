@@ -3,19 +3,29 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+        minLength: 3,
+        maxLength: 30
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minLength: 8
     },
-    firstname: {
+    firstName: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        maxLength: 50
     },
-    lastname: {
+    lastName: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        maxLength: 50
     }
 });
 
