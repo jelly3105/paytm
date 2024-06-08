@@ -1,7 +1,7 @@
 import zod from "zod";
 
 const signUpSchema = zod.object({
-    userName: zod.string().min(3).max(30).refine((value) => {
+    userName: zod.string().email().min(3).max(30).refine((value) => {
         const containsWhiteSpace = value === value.trim();
         const everythingInLowercase = value === value.toLowerCase();
         return containsWhiteSpace && everythingInLowercase;
@@ -15,6 +15,16 @@ const signUpSchema = zod.object({
     })
 }).strict();
 
+const logInSchema = zod.object({
+    userName: zod.string().email().min(3).max(30).refine((value) => {
+        const containsWhiteSpace = value === value.trim();
+        const everythingInLowercase = value === value.toLowerCase();
+        return containsWhiteSpace && everythingInLowercase;
+    }),
+    password: zod.string().min(8).max(16)
+}).strict();
+
 export default {
-    signUpSchema
+    signUpSchema,
+    logInSchema
 }
