@@ -1,15 +1,10 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import validationSchema from "../validations/validationSchema";
 import { findUserByUsername, saveUser } from "../database/user";
 import { UserType } from "../helpers/types";
 import { generateHashedPassword } from "../services/generateHashedPassword";
-
-
-dotenv.config();
-const jwtPassword = process.env.jwtPassword as string;
+import { generateJWT } from "../services/generateJWT";
 
 const signUp = async (req:Request, res:Response) => {
     try {
@@ -42,7 +37,7 @@ const signUp = async (req:Request, res:Response) => {
         }
 
         // 5. Create jwt
-        const token = jwt.sign({ username: userData.username }, jwtPassword);
+        const token = await generateJWT(userData.username);
         return res.json({
             token: token,
             user: user._id
@@ -76,7 +71,7 @@ const logIn = async (req:Request, res:Response) => {
         }
 
         // 4. Create jwt
-        const token = jwt.sign({ username: userName }, jwtPassword);
+        const token = await generateJWT(userName);
         return res.json({
             token: token,
             user: user._id
