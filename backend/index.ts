@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import routes from "./routes";
+import rootRouter from "./routes/index";
 import { connectToDB } from "./database/connectToDB";
 
 dotenv.config();
@@ -12,7 +12,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/api', routes);
+app.use('/api/v1', rootRouter);
 
 app.listen(PORT, async () => {
     await connectToDB();
