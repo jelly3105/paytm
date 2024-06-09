@@ -1,4 +1,4 @@
-import { UserType } from "../helpers/types";
+import { UserType, UpdateUserType } from "../helpers/types";
 import User from "../models/user";
 
 export const findUserByUsername = async (username: string) => {
@@ -22,4 +22,19 @@ export const saveUser = async (userData: UserType) => {
         throw new Error(e);
     }
     return user;
+}
+
+export const findByUsernameAndUpdate = async (username: string, userData: UpdateUserType) => {
+    let updatedUser;
+    try {
+        updatedUser = await User.findOneAndUpdate(
+          { username },
+          { $set: userData },
+          { new: true }
+        );
+      } catch (e:any) {
+        console.log(`Error while updating user : ${e}`);
+        throw new Error(e);
+      }
+      return updatedUser;
 }

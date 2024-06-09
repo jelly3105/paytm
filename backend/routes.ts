@@ -1,11 +1,12 @@
 import express from "express";
-import authenticationRoutes from "./controllers/authentication";
+import authentication from "./controllers/authentication";
+import user from "./controllers/user";
 import { authMiddleware } from "./middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.post('/signup', authenticationRoutes.signUp);
-router.post('/login', authenticationRoutes.logIn);
-router.get('/', authMiddleware);
+router.post('/signup', authentication.signUp);
+router.post('/login', authentication.logIn);
+router.put('/user', authMiddleware, user.updateUser);
 
 export default router;
