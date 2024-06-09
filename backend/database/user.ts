@@ -27,10 +27,23 @@ export const saveUser = async (userData: UserType) => {
 export const findByUserIdAndUpdate = async (id: string, userData: UpdateUserType) => {
     let updateResult;
     try {
-        updateResult = await User.updateOne({ _id: id }, userData);;
+        updateResult = await User.updateOne({ _id: id }, userData);
     } catch (e:any) {
         console.log(`Error while updating user : ${e}`);
         throw new Error(e);
     }
     return updateResult;
+}
+
+export const fetchUsersByFirstnameOrLastname = async (searchCriteria: any) => {
+    let users;
+    try {
+        users = await User.find({
+            $or: [...searchCriteria]
+        });
+    } catch (e:any) {
+        console.log(`Error while fetching user by firstname or lastname: ${e}`);
+        throw new Error(e);
+    }
+    return users;
 }
