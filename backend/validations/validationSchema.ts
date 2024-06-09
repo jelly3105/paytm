@@ -25,13 +25,16 @@ const logInSchema = zod.object({
 }).strict();
 
 const updateUserSchema = zod.object({
-    password: zod.string().min(8).max(16).optional(),
-    firstName: zod.string().max(50).refine((value) => {
-        return value === value.trim();
-    }).optional(),
-    lastName: zod.string().max(50).refine((value) => {
-        return value === value.trim();
-    }).optional()
+    id: zod.string(),
+    userData: zod.object({
+        password: zod.string().min(8).max(16).optional(),
+        firstName: zod.string().max(50).refine((value) => {
+            return value === value.trim();
+        }).optional(),
+        lastName: zod.string().max(50).refine((value) => {
+            return value === value.trim();
+        }).optional()
+    }).strict()
 })
 
 export default {

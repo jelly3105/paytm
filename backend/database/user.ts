@@ -24,17 +24,13 @@ export const saveUser = async (userData: UserType) => {
     return user;
 }
 
-export const findByUsernameAndUpdate = async (username: string, userData: UpdateUserType) => {
-    let updatedUser;
+export const findByUserIdAndUpdate = async (id: string, userData: UpdateUserType) => {
+    let updateResult;
     try {
-        updatedUser = await User.findOneAndUpdate(
-          { username },
-          { $set: userData },
-          { new: true }
-        );
-      } catch (e:any) {
+        updateResult = await User.updateOne({ _id: id }, userData);;
+    } catch (e:any) {
         console.log(`Error while updating user : ${e}`);
         throw new Error(e);
-      }
-      return updatedUser;
+    }
+    return updateResult;
 }
