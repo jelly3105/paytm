@@ -5,6 +5,7 @@ import { findUserByUsername, saveUser } from "../database/user";
 import { UserType } from "../helpers/types";
 import { generateHashedPassword } from "../services/generateHashedPassword";
 import { generateJWT } from "../services/generateJWT";
+import accountOperations from "../database/account";
 
 const signUp = async (req:Request, res:Response) => {
     try {
@@ -35,6 +36,9 @@ const signUp = async (req:Request, res:Response) => {
         if(!user) {
             return res.status(500).json({"msg": "Server is down, please try again!"})
         }
+
+        // Create account
+        await accountOperations.createAccount(user._id as unknown as string);
 
         // 5. Create jwt
         const token = await generateJWT(userData.username);

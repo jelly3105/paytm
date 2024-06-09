@@ -40,7 +40,6 @@ const getUsers = async (req:Request, res:Response) => {
     try{
         // 1. Fetch query parameter and validate it.
         const { filter } = req.query;
-        console.log(filter)
         if(!filter){
             return res.status(400).json({ message: 'Filter is not present!' });
         }
@@ -59,7 +58,6 @@ const getUsers = async (req:Request, res:Response) => {
         }];
 
         const users = await fetchUsersByFirstnameOrLastname(searchCriteria);
-        console.log(users);
 
         return res.json({users: users.map(user => {
             return {
