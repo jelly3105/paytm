@@ -25,7 +25,6 @@ const logInSchema = zod.object({
 }).strict();
 
 const updateUserSchema = zod.object({
-    id: zod.string(),
     userData: zod.object({
         password: zod.string().min(8).max(16).optional(),
         firstName: zod.string().max(50).refine((value) => {
@@ -37,14 +36,15 @@ const updateUserSchema = zod.object({
     }).strict()
 })
 
-const getBalanceSchema = zod.object({
+const transferMoneySchema = zod.object({
     userId: zod.string(),
-    userName: zod.string()
+    to: zod.string(),
+    amount: zod.number(),
 }).strict();
 
 export default {
     signUpSchema,
     logInSchema,
     updateUserSchema,
-    getBalanceSchema
+    transferMoneySchema
 }

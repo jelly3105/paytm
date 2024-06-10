@@ -41,7 +41,7 @@ const signUp = async (req:Request, res:Response) => {
         await accountOperations.createAccount(user._id as unknown as string);
 
         // 5. Create jwt
-        const token = await generateJWT(userData.username);
+        const token = await generateJWT(user._id as unknown as string);
         return res.json({
             token: token,
             user: user._id
@@ -75,7 +75,7 @@ const logIn = async (req:Request, res:Response) => {
         }
 
         // 4. Create jwt
-        const token = await generateJWT(userName);
+        const token = await generateJWT(user._id as unknown as string);
         return res.json({
             token: token,
             user: user._id

@@ -4,13 +4,7 @@ import accountOperations from "../database/account";
 
 const getBalance = async (req:Request, res:Response) => {
     try{
-        // 1. validate schema
-        const { success } = validationSchema.getBalanceSchema.safeParse(req.body);
-        if(!success){
-            return res.status(400).json({msg:"Validation failed!"})
-        }
-
-        // 2. Fetch balance of user
+        // Fetch balance of user
         const account = await accountOperations.getAccountByUserId(req.body.userId);
         if(!account) {
             return res.status(400).json({msg:"Account is not present!"})
@@ -23,6 +17,21 @@ const getBalance = async (req:Request, res:Response) => {
     
 }
 
+const transferMoney = async (req:Request, res:Response) => {
+    try{
+        // 1. validate schema
+        const { success } = validationSchema.transferMoneySchema.safeParse(req.body);
+        console.log(req.body.userId)
+        // 2. check if payee has sufficient balance to transfer money
+        // 3. Transfer money
+        return res.json({msg: "Transfer money"})
+    }catch(e) {
+        return res.status(500).json({msg : "Server is doown!"})
+    }
+    
+}
+
 export default {
-    getBalance
+    getBalance,
+    transferMoney
 }

@@ -12,7 +12,8 @@ const updateUser = async (req:Request, res:Response) => {
         }
 
         // 2. Create input to update user
-        const { id, userData } = req.body;
+        console.log(req.body)
+        const { userId, userData } = req.body;
         const { password } = userData;
 
         if(password) {
@@ -25,12 +26,12 @@ const updateUser = async (req:Request, res:Response) => {
         }
 
         // 3. update user
-        const updateResult = await findByUserIdAndUpdate(id, userData);
+        const updateResult = await findByUserIdAndUpdate(userId, userData);
         if(!updateResult.modifiedCount) {
             return res.status(400).json({ message: 'User does not exist!' });
         }
 
-        return res.json({"msg" : "User updated successfully!", user_id: id})
+        return res.json({"msg" : "User updated successfully!", user_id: userId})
     }catch(e) {
         return res.status(500).json({msg : "Server is doown!"})
     }

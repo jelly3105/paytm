@@ -3,7 +3,7 @@ import { JwtPayload } from "jsonwebtoken";
 import { verifyJWT } from "../services/generateJWT";
 
 interface CustomJwtPayload extends JwtPayload {
-    username: string;
+    userId: string;
 }
   
 export const authMiddleware = async (req:any, res:any, next:any) => {
@@ -21,7 +21,7 @@ export const authMiddleware = async (req:any, res:any, next:any) => {
     // 2. Verify token
     try {
         const decoded: CustomJwtPayload = await verifyJWT(token) as CustomJwtPayload;
-        req.body.userName = decoded.username;
+        req.body.userId = decoded.userId;
         next();
     } catch (err) {
         return res.status(403).json({});
