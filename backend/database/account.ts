@@ -12,6 +12,20 @@ const createAccount = async (userId:string) => {
     }
 }
 
+const getAccountByUserId = async (userId:string) => {
+    let account;
+    try {
+        account = await Account.findOne({
+            userId
+        })
+    }catch(e:any) {
+        console.log(`Error while getting account by user id : ${e}`);
+        throw new Error(e);
+    }
+    return account;
+}
+
 export default {
-    createAccount
+    createAccount,
+    getAccountByUserId
 }

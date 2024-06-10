@@ -1,7 +1,9 @@
 import express from "express";
-import authentication from "../controllers/authentication";
+import account from "../controllers/account";
 import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = express.Router();
+
+router.get('/balance', authMiddleware, account.getBalance);
 
 export default router;

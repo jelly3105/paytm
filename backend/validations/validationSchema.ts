@@ -37,8 +37,14 @@ const updateUserSchema = zod.object({
     }).strict()
 })
 
+const getBalanceSchema = zod.object({
+    userId: zod.string(),
+    userName: zod.string()
+}).strict();
+
 export default {
     signUpSchema,
     logInSchema,
-    updateUserSchema
+    updateUserSchema,
+    getBalanceSchema
 }
