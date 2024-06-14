@@ -21,10 +21,20 @@ const transferMoney = async (req:Request, res:Response) => {
     try{
         // 1. validate schema
         const { success } = validationSchema.transferMoneySchema.safeParse(req.body);
-        console.log(req.body.userId)
-        // 2. check if payee has sufficient balance to transfer money
-        // 3. Transfer money
-        return res.json({msg: "Transfer money"})
+        if(!success) {
+            return res.status(400).json({msg:"Validation failed!"})
+        }
+    
+        const { userId , to, amount } = req.body;
+        if(userId === to) {
+            return res.status(400).json({msg: 'To and from account are same!'});
+        }
+        // 2. Transfer money
+        const response = await accountOperations.transferMoney(userId, amount, to);
+        if(response) {
+            return res.status(400).json({msg:response});
+        }
+        return res.json({msg: "Transfer successful!"})
     }catch(e) {
         return res.status(500).json({msg : "Server is doown!"})
     }
